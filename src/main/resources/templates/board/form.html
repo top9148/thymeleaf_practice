@@ -1,0 +1,71 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: head('게시판')">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
+
+    <title>게시판</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('board')"/>
+
+<div class="container">
+    <h2>게시판</h2>
+    <form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control"
+                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
+                   id="title" th:field="*{title}" placeholder="제목은 최대 50자까지"/>
+            <div class="invalied-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                제목 유효성 에러 메시지
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">작성자</label>
+            <input type="text" class="form-control"
+                   th:classappend="${#fields.hasErrors('author')} ? 'is-invalid'"
+                   id="author" th:field="*{author}"/>
+            <div class="invalied-feedback" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">
+                작성자 유효성 에러 메시지
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea type="text" class="form-control"
+                      th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
+                      id="content" th:field="*{content}" rows="3"></textarea>
+            <div class="invalied-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                내용 유효성 에러 메시지
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary" style="margin-right:2px;">저장</button>
+            <a type="button" class="btn btn-secondary" th:href="@{/board/list}">취소</a>
+        </div>
+    </form>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
