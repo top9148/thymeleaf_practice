@@ -25,7 +25,7 @@
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control"
                    th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
-                   id="title" th:field="*{title}" placeholder="제목은 최대 50자까지"/>
+                   id="title" th:field="*{title}"/>
             <div class="invalied-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
                 제목 유효성 에러 메시지
             </div>

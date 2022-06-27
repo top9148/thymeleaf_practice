@@ -2,6 +2,7 @@ package com.jeonghoon.thymeleaf_practice.controller;
 
 import com.jeonghoon.thymeleaf_practice.model.Board;
 import com.jeonghoon.thymeleaf_practice.repository.BoardRepository;
+import com.jeonghoon.thymeleaf_practice.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class BoardController {
   @Autowired
   private BoardRepository boardRepository;
 
+  @Autowired
+  private BoardValidator boardValidator;
+
   @GetMapping("/list")
   public String list(Model model) {
     List<Board> boards = boardRepository.findAll();
@@ -27,7 +31,7 @@ public class BoardController {
 
   @GetMapping("/form")
   public String form(Model model, @RequestParam(required = false) Long id) {
-    if(id == null) {
+    if (id == null) {
       model.addAttribute("board", new Board());
     } else {
       Board board = boardRepository.findById(id).orElse(null);
@@ -39,10 +43,10 @@ public class BoardController {
 
   @PostMapping("/form")
   public String boardSave(@Valid Board board, BindingResult bindingResult) {
+    boardValidator.validate(board, bindingResult);
+
     // 바인딩한 에러가 넘어올 경우(에러 발생)
-    if(bindingResult.hasErrors()) {
-      System.out.println("bindingResult!!!!");
-      System.out.println(bindingResult.hasErrors());
+    if (bindingResult.hasErrors()) {
       return "board/form";
     }
 
